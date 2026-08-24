@@ -178,7 +178,15 @@ export default function Home() {
         <div className="tickerTrack">
           {[0, 1].map((groupIndex) => (
             <div className="tickerGroup" aria-hidden={groupIndex === 1 || undefined} key={groupIndex}>
-              {skills.map((skill) => <span key={skill}>{skill}<i aria-hidden="true">✦</i></span>)}
+              {[0, 1, 2].map((sequenceIndex) => (
+                <div
+                  className="tickerSequence"
+                  aria-hidden={(groupIndex === 1 || sequenceIndex > 0) || undefined}
+                  key={sequenceIndex}
+                >
+                  {skills.map((skill) => <span key={skill}>{skill}<i aria-hidden="true">✦</i></span>)}
+                </div>
+              ))}
             </div>
           ))}
         </div>
