@@ -114,10 +114,8 @@ export default function Home() {
 
     function updateNavigation() {
       const currentY = window.scrollY;
-      const hero = document.getElementById("top");
-      const heroBottom = hero ? hero.offsetTop + hero.offsetHeight - 80 : 640;
 
-      if (currentY <= heroBottom) {
+      if (currentY <= 12) {
         upwardDistance = 0;
         setNavMode("hero");
       } else {
