@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 type Language = "en" | "ru" | "uk";
+type NavMode = "hero" | "visible" | "hidden";
 
 const languages: { code: Language; label: string; title: string }[] = [
   { code: "en", label: "EN", title: "English" },
@@ -96,11 +97,46 @@ const copy = {
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
+  const [navMode, setNavMode] = useState<NavMode>("hero");
   const t = copy[language];
 
   useEffect(() => {
     const saved = window.localStorage.getItem("portfolio-language") as Language | null;
-    if (saved && languages.some(({ code }) => code === saved)) setLanguage(saved);
+    if (saved && languages.some(({ code }) => code === saved)) {
+      setLanguage(saved);
+      document.documentElement.lang = saved;
+    }
+  }, []);
+
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let upwardDistance = 0;
+
+    function updateNavigation() {
+      const currentY = window.scrollY;
+      const hero = document.getElementById("top");
+      const heroBottom = hero ? hero.offsetTop + hero.offsetHeight - 80 : 640;
+
+      if (currentY <= heroBottom) {
+        upwardDistance = 0;
+        setNavMode("hero");
+      } else {
+        const delta = currentY - lastY;
+        if (delta > 3) {
+          upwardDistance = 0;
+          setNavMode("hidden");
+        } else if (delta < -1) {
+          upwardDistance += Math.abs(delta);
+          if (upwardDistance >= 8) setNavMode("visible");
+        }
+      }
+
+      lastY = currentY;
+    }
+
+    window.addEventListener("scroll", updateNavigation, { passive: true });
+    updateNavigation();
+    return () => window.removeEventListener("scroll", updateNavigation);
   }, []);
 
   function changeLanguage(next: Language) {
@@ -110,7 +146,9 @@ export default function Home() {
   }
 
   return (
-    <main>
+    <main data-language={language}>
+      <div className="navSlot">
+      <div className={`navBar navBar--${navMode}`}>
       <nav className="nav shell" aria-label="Primary navigation">
         <a className="brand" href="#top" aria-label="BozemenOfficial — home">BO<span>.</span></a>
         <div className="navLinks"><a href="#work">{t.nav.work}</a><a href="#services">{t.nav.services}</a><a href="#about">{t.nav.about}</a></div>
@@ -121,6 +159,8 @@ export default function Home() {
           <a className="navCta" href="mailto:nikolasdusyk.99@gmail.com">{t.nav.talk} <span aria-hidden="true">↗</span></a>
         </div>
       </nav>
+      </div>
+      </div>
 
       <section className="hero shell" id="top">
         <div className="heroMain">
