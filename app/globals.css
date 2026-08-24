@@ -50,7 +50,7 @@ main[data-language="ru"] .hero h1,main[data-language="uk"] .hero h1 { font-size:
 .tickerTrack { width:max-content; display:flex; animation:ticker-scroll 48s linear infinite; }
 .tickerGroup,.tickerSequence { width:max-content; flex:none; display:flex; align-items:center; }
 .ticker span { flex:none; display:flex; align-items:center; white-space:nowrap; padding-block:20px; font:650 12px/1 var(--font-geist-mono); text-transform:uppercase; letter-spacing:.08em; }
-.ticker i { width:10px; height:10px; margin-inline:26px; display:inline-flex; align-items:center; justify-content:center; color:#7ca500; font-style:normal; line-height:1; }
+.ticker i { width:10px; height:10px; margin-inline:40px; display:inline-flex; align-items:center; justify-content:center; color:#7ca500; font-style:normal; line-height:1; }
 .ticker:hover .tickerTrack { animation-play-state:paused; }
 @keyframes ticker-scroll { to { transform:translateX(-50%); } }
 .section { padding-block:120px; }
