@@ -174,7 +174,15 @@ export default function Home() {
         </aside>
       </section>
 
-      <div className="ticker" aria-label={t.coreSkills}><div className="tickerTrack">{skills.map((skill) => <span key={skill}>{skill}<i aria-hidden="true">✦</i></span>)}</div></div>
+      <div className="ticker" aria-label={t.coreSkills}>
+        <div className="tickerTrack">
+          {[0, 1].map((groupIndex) => (
+            <div className="tickerGroup" aria-hidden={groupIndex === 1 || undefined} key={groupIndex}>
+              {skills.map((skill) => <span key={skill}>{skill}<i aria-hidden="true">✦</i></span>)}
+            </div>
+          ))}
+        </div>
+      </div>
 
       <section className="section shell" id="work">
         <div className="sectionHead"><div><p className="kicker">{t.selectedWork}</p><h2>{t.projectHeading}<br /><span>{t.projectAccent}</span></h2></div><p>{t.projectIntro}</p></div>
