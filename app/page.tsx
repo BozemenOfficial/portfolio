@@ -48,7 +48,9 @@ export default function Home() {
           </div>
         </div>
         <aside className="heroAside" aria-label="Developer profile summary">
-          <div className="monogram" aria-hidden="true">N</div>
+          <div className="avatarWrap">
+            <img src="https://github.com/BozemanChannel.png?size=512" alt="Nikolas D. GitHub profile photo" />
+          </div>
           <div className="statusCard">
             <span className="statusDot" />
             <div><b>Nikolas D.</b><small>Full-Stack Developer</small></div>
@@ -58,9 +60,13 @@ export default function Home() {
       </section>
 
       <div className="ticker" aria-label="Core skills">
-        <div>
-          {skills.concat(skills).map((skill, index) => (
-            <span key={`${skill}-${index}`}>{skill}<i>✦</i></span>
+        <div className="tickerTrack">
+          {[false, true].map((duplicate) => (
+            <div className="tickerGroup" aria-hidden={duplicate || undefined} key={String(duplicate)}>
+              {skills.map((skill) => (
+                <span key={skill}>{skill}<i>✦</i></span>
+              ))}
+            </div>
           ))}
         </div>
       </div>
