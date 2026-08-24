@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <main>
       <nav className="nav shell" aria-label="Primary navigation">
-        <a className="brand" href="#top" aria-label="Nikolas D. — home">ND<span>.</span></a>
+        <a className="brand" href="#top" aria-label="BozemenOfficial — home">BO<span>.</span></a>
         <div className="navLinks">
           <a href="#work">Work</a><a href="#services">Services</a><a href="#about">About</a>
         </div>
@@ -49,11 +49,11 @@ export default function Home() {
         </div>
         <aside className="heroAside" aria-label="Developer profile summary">
           <div className="avatarWrap">
-            <img src="https://github.com/BozemanChannel.png?size=512" alt="Nikolas D. GitHub profile photo" />
+            <img src="https://github.com/BozemanChannel.png?size=512" alt="BozemenOfficial GitHub profile photo" />
           </div>
           <div className="statusCard">
             <span className="statusDot" />
-            <div><b>Nikolas D.</b><small>Full-Stack Developer</small></div>
+            <div><b>BozemenOfficial</b><small>Full-Stack Developer</small></div>
           </div>
           <div className="heroMeta"><span>Based in Ukraine</span><span>Remote worldwide</span></div>
         </aside>
@@ -132,7 +132,7 @@ export default function Home() {
           <a className="footerEmail" href="mailto:nikolasdusyk.99@gmail.com">nikolasdusyk.99@gmail.com <span>↗</span></a>
         </div>
         <div className="shell footerBottom">
-          <span>© 2026 Nikolas D.</span><a href="https://github.com/BozemanChannel" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#top">Back to top ↑</a>
+          <span>© 2026 BozemenOfficial</span><a href="https://github.com/BozemanChannel" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#top">Back to top ↑</a>
         </div>
       </footer>
     </main>
