@@ -26,7 +26,7 @@ h1 em,h2 em { font-family:Georgia,serif; font-weight:400; color:#709800; }
 .button.primary { background:var(--ink); color:white; }
 .button.primary:hover { background:#2f3129; }
 .button.secondary:hover { background:white; }
-.heroAside { min-height:430px; position:relative; border-left:1px solid var(--line); display:flex; align-items:center; justify-content:center; }
+.heroAside { min-height:430px; position:relative; display:flex; align-items:center; justify-content:center; }
 .avatarWrap { width:clamp(220px,23vw,270px); flex:0 0 auto; aspect-ratio:1; border-radius:50%; overflow:hidden; background:#e7e3d9; border:1px solid var(--line); box-shadow:0 24px 70px #1e21152e; }
 .avatarWrap img { width:100%; height:100%; display:block; object-fit:cover; }
 .statusCard { position:absolute; left:5%; bottom:65px; display:flex; align-items:center; gap:12px; background:#fff; border:1px solid var(--line); padding:14px 18px; box-shadow:0 16px 40px #1e21151c; }
