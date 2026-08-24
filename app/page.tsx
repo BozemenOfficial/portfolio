@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Language = "en" | "ru" | "uk";
 type NavMode = "hero" | "visible" | "hidden";
@@ -97,7 +97,10 @@ const copy = {
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
+  const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false);
   const [navMode, setNavMode] = useState<NavMode>("hero");
+  const languageChangeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const languageFinishTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const t = copy[language];
 
   useEffect(() => {
@@ -106,6 +109,11 @@ export default function Home() {
       setLanguage(saved);
       document.documentElement.lang = saved;
     }
+  }, []);
+
+  useEffect(() => () => {
+    if (languageChangeTimer.current) clearTimeout(languageChangeTimer.current);
+    if (languageFinishTimer.current) clearTimeout(languageFinishTimer.current);
   }, []);
 
   useEffect(() => {
@@ -138,20 +146,34 @@ export default function Home() {
   }, []);
 
   function changeLanguage(next: Language) {
-    setLanguage(next);
-    window.localStorage.setItem("portfolio-language", next);
-    document.documentElement.lang = next;
+    if (next === language || isLanguageTransitioning) return;
+
+    const applyLanguage = () => {
+      setLanguage(next);
+      window.localStorage.setItem("portfolio-language", next);
+      document.documentElement.lang = next;
+    };
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      applyLanguage();
+      return;
+    }
+
+    setIsLanguageTransitioning(true);
+    languageChangeTimer.current = setTimeout(applyLanguage, 390);
+    languageFinishTimer.current = setTimeout(() => setIsLanguageTransitioning(false), 900);
   }
 
   return (
-    <main data-language={language}>
+    <main data-language={language} data-language-transitioning={isLanguageTransitioning || undefined}>
+      <div className={`languageWipe${isLanguageTransitioning ? " languageWipe--active" : ""}`} aria-hidden="true" />
       <div className="navSlot">
       <div className={`navBar navBar--${navMode}`}>
       <nav className="nav shell" aria-label="Primary navigation">
         <a className="brand" href="#top" aria-label="BozemenOfficial — home">BO<span>.</span></a>
         <div className="navLinks"><a href="#work">{t.nav.work}</a><a href="#services">{t.nav.services}</a><a href="#about">{t.nav.about}</a></div>
         <div className="navActions">
-          <div className="languageSwitch" aria-label="Language selector">
+          <div className="languageSwitch" aria-label="Language selector" aria-busy={isLanguageTransitioning || undefined}>
             {languages.map(({ code, label, title }) => <button key={code} type="button" title={title} aria-pressed={language === code} onClick={() => changeLanguage(code)}>{label}</button>)}
           </div>
           <a className="navCta" href="mailto:nikolasdusyk.99@gmail.com">{t.nav.talk} <span aria-hidden="true">↗</span></a>
