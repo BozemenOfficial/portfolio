@@ -201,7 +201,7 @@ export default function Home() {
 
       <footer>
         <div className="shell footerMain"><p className="kicker">{t.contactKicker}</p><h2>{t.contactHeading}<br /><em>{t.contactAccent}</em></h2><a className="footerEmail" href="mailto:nikolasdusyk.99@gmail.com">nikolasdusyk.99@gmail.com <span>↗</span></a></div>
-        <div className="shell footerBottom"><span>© 2026 BozemenOfficial</span><a href="https://github.com/BozemanChannel" target="_blank" rel="noreferrer">GitHub ↗</a><a href="#top">{t.back} ↑</a></div>
+        <div className="shell footerBottom"><span>© 2026 BozemenOfficial</span><a href="https://github.com/BozemanChannel" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://t.me/BozemenOfficial" target="_blank" rel="noreferrer">Telegram ↗</a><a href="#top">{t.back} ↑</a></div>
       </footer>
     </main>
   );
