@@ -49,8 +49,8 @@ main[data-language="ru"] .hero h1,main[data-language="uk"] .hero h1 { font-size:
 .ticker { overflow:hidden; border-block:1px solid var(--line); background:#ebe7dc; -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%); mask-image:linear-gradient(90deg,transparent 0,#000 28px,#000 calc(100% - 28px),transparent 100%); }
 .tickerTrack { width:max-content; display:flex; animation:ticker-scroll 30s linear infinite; }
 .tickerGroup { width:max-content; min-width:100vw; flex:none; display:flex; align-items:center; justify-content:space-around; }
-.ticker span { display:flex; align-items:center; white-space:nowrap; padding:20px 16px; font:650 12px/1 var(--font-geist-mono); text-transform:uppercase; letter-spacing:.08em; }
-.ticker i { margin-left:26px; color:#7ca500; font-style:normal; }
+.ticker span { display:flex; align-items:center; white-space:nowrap; padding-block:20px; font:650 12px/1 var(--font-geist-mono); text-transform:uppercase; letter-spacing:.08em; }
+.ticker i { width:10px; height:10px; margin-inline:26px; display:inline-flex; align-items:center; justify-content:center; color:#7ca500; font-style:normal; line-height:1; }
 .ticker:hover .tickerTrack { animation-play-state:paused; }
 @keyframes ticker-scroll { to { transform:translateX(-50%); } }
 .section { padding-block:120px; }
