@@ -18,9 +18,9 @@ const copy = {
   en: {
     nav: { work: "Work", services: "Services", about: "About", talk: "Let's talk" },
     available: "Open to project enquiries",
-    heroTitle: "Mykola.", heroConnector: "Web", heroEmphasis: "developer.",
+    heroTitle: "Bozemen.", heroConnector: "Web", heroEmphasis: "developer.",
     heroCopy: "I build interfaces with React and TypeScript and connect them to application logic and databases. Here is what I have built so far.",
-    viewWork: "View selected work", email: "Email me", role: "Web developer",
+    viewWork: "View selected work", email: "Email me", role: "Web Developer · Full Stack",
     based: "Based in Ukraine", remote: "Remote worldwide", coreSkills: "Core skills",
     selectedWork: "Selected work", projectHeading: "From interface", projectAccent: "to checkout.",
     projectIntro: "NovaShop is my personal ecommerce project. I built the storefront, shopping flow and server-side order logic.",
@@ -36,7 +36,7 @@ const copy = {
       ["Data & application logic", "Forms, request validation, database models and order processing in NovaShop."],
     ],
     about: "About", aboutHeading: "Learning by building.", aboutAccent: "One feature at a time.",
-    aboutOne: "I’m Mykola, a developer based in Ukraine. I work with React and TypeScript and learn backend development through practical projects.",
+    aboutOne: "I’m Bozemen, a developer based in Ukraine. I work with React and TypeScript and learn backend development through practical projects.",
     aboutTwo: "In NovaShop I worked on the catalog, cart, authentication and database-backed orders. This site is where I collect that work and explain the decisions behind it.",
     principles: ["Clear communication", "Practical solutions", "Honest project scope"],
     contactKicker: "Have a project?", contactHeading: "Have something", contactAccent: "in mind?", back: "Back to top",
@@ -50,9 +50,9 @@ const copy = {
   ru: {
     nav: { work: "Работы", services: "Услуги", about: "Обо мне", talk: "Связаться" },
     available: "Открыт к обсуждению проектов",
-    heroTitle: "Mykola.", heroConnector: "Веб-", heroEmphasis: "разработчик.",
+    heroTitle: "Bozemen.", heroConnector: "Веб-", heroEmphasis: "разработчик.",
     heroCopy: "Создаю интерфейсы на React и TypeScript, связываю их с логикой приложения и базой данных. Здесь — мои проекты и детали их реализации.",
-    viewWork: "Смотреть работы", email: "Написать мне", role: "Веб-разработчик",
+    viewWork: "Смотреть работы", email: "Написать мне", role: "Веб-разработчик · Full Stack",
     based: "Нахожусь в Украине", remote: "Работаю по всему миру", coreSkills: "Основной стек",
     selectedWork: "Избранная работа", projectHeading: "От интерфейса", projectAccent: "до заказа.",
     projectIntro: "NovaShop — мой личный интернет-магазин. В нём я реализовал витрину, сценарий покупки и серверную обработку заказов.",
@@ -68,7 +68,7 @@ const copy = {
       ["Данные и логика приложения", "Формы, проверка запросов, модели базы данных и обработка заказов в NovaShop."],
     ],
     about: "Обо мне", aboutHeading: "Учусь, создавая.", aboutAccent: "От задачи к задаче.",
-    aboutOne: "Я Mykola, разработчик из Украины. Работаю с React и TypeScript, изучаю бэкенд на практических задачах.",
+    aboutOne: "Я Bozemen, разработчик из Украины. Работаю с React и TypeScript, изучаю бэкенд на практических задачах.",
     aboutTwo: "В NovaShop занимался каталогом, корзиной, авторизацией и заказами с сохранением в базе. На этом сайте собираю свои работы и рассказываю, как они устроены.",
     principles: ["Понятная коммуникация", "Практичные решения", "Честная оценка проекта"],
     contactKicker: "Есть проект?", contactHeading: "Есть задача", contactAccent: "для обсуждения?", back: "Наверх",
@@ -82,9 +82,9 @@ const copy = {
   uk: {
     nav: { work: "Роботи", services: "Послуги", about: "Про мене", talk: "Зв'язатися" },
     available: "Відкритий до обговорення проєктів",
-    heroTitle: "Mykola.", heroConnector: "Веб-", heroEmphasis: "розробник.",
+    heroTitle: "Bozemen.", heroConnector: "Веб-", heroEmphasis: "розробник.",
     heroCopy: "Створюю інтерфейси на React і TypeScript, поєдную їх із логікою застосунку та базою даних. Тут — мої проєкти й деталі їх реалізації.",
-    viewWork: "Переглянути роботи", email: "Написати мені", role: "Веброзробник",
+    viewWork: "Переглянути роботи", email: "Написати мені", role: "Веброзробник · Full Stack",
     based: "Перебуваю в Україні", remote: "Працюю по всьому світу", coreSkills: "Основний стек",
     selectedWork: "Обрана робота", projectHeading: "Від інтерфейсу", projectAccent: "до замовлення.",
     projectIntro: "NovaShop — мій особистий інтернет-магазин. У ньому я реалізував вітрину, сценарій покупки й серверну обробку замовлень.",
@@ -100,7 +100,7 @@ const copy = {
       ["Дані та логіка застосунку", "Форми, перевірка запитів, моделі бази даних і обробка замовлень у NovaShop."],
     ],
     about: "Про мене", aboutHeading: "Навчаюся, створюючи.", aboutAccent: "Від задачі до задачі.",
-    aboutOne: "Я Mykola, розробник з України. Працюю з React і TypeScript, вивчаю бекенд на практичних задачах.",
+    aboutOne: "Я Bozemen, розробник з України. Працюю з React і TypeScript, вивчаю бекенд на практичних задачах.",
     aboutTwo: "У NovaShop працював над каталогом, кошиком, авторизацією та замовленнями зі збереженням у базі. На цьому сайті збираю свої роботи й розповідаю, як вони влаштовані.",
     principles: ["Зрозуміла комунікація", "Практичні рішення", "Чесна оцінка проєкту"],
     contactKicker: "Є проєкт?", contactHeading: "Є задача", contactAccent: "для обговорення?", back: "Нагору",
@@ -231,7 +231,7 @@ export default function Home() {
             <div className="heroMeta"><span>{t.based}</span><span>{t.remote}</span></div>
             <div className="avatarWrap"><img src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" /></div>
           </div>
-          <div className="statusCard"><span className="statusDot" /><div><b>BozemenOfficial</b><small>{t.role}</small></div></div>
+          <div className="statusCard"><span className="statusDot" /><div><b>Bozemen</b><small>{t.role}</small></div></div>
         </aside>
       </section>
 
