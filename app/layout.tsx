@@ -11,17 +11,17 @@ const plexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
-  title: "BozemenOfficial — Full-Stack Developer",
-  description: "Full-Stack Developer building clean, reliable websites and web applications — frontend, backend, APIs and databases.",
+  title: "Mykola · BozemenOfficial — Web Developer",
+  description: "Personal portfolio: React and TypeScript interfaces, NovaShop and practical web development.",
   openGraph: {
-    title: "BozemenOfficial — Full-Stack Developer",
-    description: "Web products that work — frontend, backend, APIs and databases.",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "BozemenOfficial — Full-Stack Developer" }],
+    title: "Mykola · BozemenOfficial — Web Developer",
+    description: "Explore NovaShop, my tools and the work behind the interface.",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Mykola · BozemenOfficial — Web Developer" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "BozemenOfficial — Full-Stack Developer",
-    description: "Web products that work — frontend, backend, APIs and databases.",
+    title: "Mykola · BozemenOfficial — Web Developer",
+    description: "Explore NovaShop, my tools and the work behind the interface.",
     images: ["/og.png"],
   },
 };
