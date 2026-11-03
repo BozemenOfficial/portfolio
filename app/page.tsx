@@ -227,9 +227,11 @@ export default function Home() {
           <div className="heroActions"><a className="button primary" href="#work">{t.viewWork} <span>↓</span></a><a className="button secondary" href="mailto:nikolasdusyk.99@gmail.com">{t.email}</a></div>
         </div>
         <aside className="heroAside" aria-label="Developer profile summary">
-          <div className="avatarWrap"><img src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" /></div>
+          <div className="portraitFrame">
+            <div className="heroMeta"><span>{t.based}</span><span>{t.remote}</span></div>
+            <div className="avatarWrap"><img src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" /></div>
+          </div>
           <div className="statusCard"><span className="statusDot" /><div><b>BozemenOfficial</b><small>{t.role}</small></div></div>
-          <div className="heroMeta"><span>{t.based}</span><span>{t.remote}</span></div>
         </aside>
       </section>
 
