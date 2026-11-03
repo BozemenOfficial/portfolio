@@ -209,3 +209,32 @@ footer { background:#e0e5d2; padding-top:76px; }
  *,*::before,*::after { animation:none !important; transition:none !important; }
  .languageWipe { display:none; }
 }
+
+
+/* Rotate the caption and photograph around the photograph's center. */
+.portraitFrame {
+  position:relative;
+  width:min(100%,250px);
+  flex:none;
+  transform:rotate(3deg);
+  transform-origin:50% 50%;
+}
+.portraitFrame .avatarWrap { width:100%; transform:none; }
+.portraitFrame .heroMeta {
+  position:absolute;
+  inset:auto 0 calc(100% + 18px);
+  display:grid;
+  gap:5px;
+  text-align:left;
+  line-height:1.5;
+}
+.heroAside { padding-top:70px; }
+@media(max-width:620px) {
+  .heroAside { padding-top:75px; }
+  .portraitFrame { width:90px; }
+  .portraitFrame .heroMeta {
+    inset:auto auto calc(100% + 18px) 0;
+    width:min(260px,calc(100vw - 60px));
+    font-size:10px;
+  }
+}
