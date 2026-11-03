@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type Language = "en" | "ru" | "uk";
 type NavMode = "hero" | "visible" | "hidden";
@@ -12,86 +12,104 @@ const languages: { code: Language; label: string; title: string }[] = [
   { code: "uk", label: "UA", title: "Українська" },
 ];
 
-const skills = ["Next.js", "React", "TypeScript", "Node.js", "REST API", "Prisma ORM", "SQL / SQLite", "JWT & Auth"];
+const skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Node.js", "GitHub", "npm", "Python", "SQLite", "VS Code", "Tailwind CSS", "Docker"];
 
 const copy = {
   en: {
     nav: { work: "Work", services: "Services", about: "About", talk: "Let's talk" },
-    available: "Available for freelance projects",
-    heroTitle: "I build web products", heroConnector: "that", heroEmphasis: "work.",
-    heroCopy: "Full-Stack Developer focused on fast, clean and reliable websites and web applications — frontend, backend, APIs and databases.",
-    viewWork: "View selected work", email: "Email me", role: "Full-Stack Developer",
+    available: "Open to project enquiries",
+    heroTitle: "Mykola.", heroConnector: "Web", heroEmphasis: "developer.",
+    heroCopy: "I build interfaces with React and TypeScript and connect them to application logic and databases. Here is what I have built so far.",
+    viewWork: "View selected work", email: "Email me", role: "Web developer",
     based: "Based in Ukraine", remote: "Remote worldwide", coreSkills: "Core skills",
-    selectedWork: "Selected work", projectHeading: "One project.", projectAccent: "Full-stack scope.",
-    projectIntro: "A focused case study showing product thinking, UI work, backend logic, authentication and database design in one working product.",
+    selectedWork: "Selected work", projectHeading: "From interface", projectAccent: "to checkout.",
+    projectIntro: "NovaShop is my personal ecommerce project. I built the storefront, shopping flow and server-side order logic.",
     projectType: "Personal project · 2026",
     projectDescription: "A complete e-commerce application with product catalog, secure authentication, cart, checkout, order history and admin tools.",
     features: ["USER / ADMIN roles", "JWT in httpOnly cookie", "Transactional orders", "Responsive interface"],
     viewProject: "View project on GitHub",
-    servicesKicker: "What I do", servicesHeading: "Useful work.", servicesAccent: "No extra noise.",
-    servicesIntro: "I can take a clear task, build the solution and explain the result without turning the process into unnecessary complexity.",
+    servicesKicker: "How I work", servicesHeading: "The details", servicesAccent: "behind the interface.",
+    servicesIntro: "These are the parts of development I practice in my own projects.",
     services: [
       ["Full-stack development", "Websites and web applications — from a responsive interface to API, database and deployment-ready code."],
       ["Existing project improvements", "Bug fixes, new features, UI updates and careful work inside an existing codebase."],
-      ["Automation & integrations", "APIs, routine workflow automation and practical AI integrations where they create real value."],
+      ["Data & application logic", "Forms, request validation, database models and order processing in NovaShop."],
     ],
-    about: "About", aboutHeading: "Building the whole product,", aboutAccent: "not just one layer.",
-    aboutOne: "I work across frontend and backend: responsive interfaces, application logic, APIs, authentication and databases. I care about understandable code and a result that is easy to use.",
-    aboutTwo: "I use AI tools for quickly handling routine tasks while keeping decisions, checks and final quality under human control.",
+    about: "About", aboutHeading: "Learning by building.", aboutAccent: "One feature at a time.",
+    aboutOne: "I’m Mykola, a developer based in Ukraine. I work with React and TypeScript and learn backend development through practical projects.",
+    aboutTwo: "In NovaShop I worked on the catalog, cart, authentication and database-backed orders. This site is where I collect that work and explain the decisions behind it.",
     principles: ["Clear communication", "Practical solutions", "Honest project scope"],
-    contactKicker: "Have a project?", contactHeading: "Let's build something", contactAccent: "useful.", back: "Back to top",
+    contactKicker: "Have a project?", contactHeading: "Have something", contactAccent: "in mind?", back: "Back to top",
+    caseTask: "The task",
+    caseTaskText: "Build a complete shopping flow: browse products, place an order and view its status.",
+    caseRole: "My work",
+    caseRoleText: "Storefront, cart state, authentication, order validation and database models.",
+    stackHeading: "Tools I work with",
+    skip: "Skip to projects",
   },
   ru: {
     nav: { work: "Работы", services: "Услуги", about: "Обо мне", talk: "Связаться" },
-    available: "Открыт для фриланс-проектов",
-    heroTitle: "Создаю веб-продукты", heroConnector: "которые", heroEmphasis: "работают.",
-    heroCopy: "Full-Stack разработчик, создающий быстрые, понятные и надёжные сайты и веб-приложения — фронтенд, бэкенд, API и базы данных.",
-    viewWork: "Смотреть работы", email: "Написать мне", role: "Full-Stack разработчик",
+    available: "Открыт к обсуждению проектов",
+    heroTitle: "Mykola.", heroConnector: "Веб-", heroEmphasis: "разработчик.",
+    heroCopy: "Создаю интерфейсы на React и TypeScript, связываю их с логикой приложения и базой данных. Здесь — мои проекты и детали их реализации.",
+    viewWork: "Смотреть работы", email: "Написать мне", role: "Веб-разработчик",
     based: "Нахожусь в Украине", remote: "Работаю по всему миру", coreSkills: "Основной стек",
-    selectedWork: "Избранная работа", projectHeading: "Один проект.", projectAccent: "Полный full-stack.",
-    projectIntro: "Подробный кейс, объединяющий продуктовое мышление, интерфейс, серверную логику, аутентификацию и проектирование базы данных.",
+    selectedWork: "Избранная работа", projectHeading: "От интерфейса", projectAccent: "до заказа.",
+    projectIntro: "NovaShop — мой личный интернет-магазин. В нём я реализовал витрину, сценарий покупки и серверную обработку заказов.",
     projectType: "Личный проект · 2026",
     projectDescription: "Полноценное e-commerce приложение с каталогом, безопасной авторизацией, корзиной, оформлением заказа, историей покупок и панелью администратора.",
     features: ["Роли USER / ADMIN", "JWT в httpOnly cookie", "Транзакционные заказы", "Адаптивный интерфейс"],
     viewProject: "Открыть проект на GitHub",
-    servicesKicker: "Что я делаю", servicesHeading: "Полезная работа.", servicesAccent: "Без лишнего шума.",
-    servicesIntro: "Беру понятную задачу, создаю решение и объясняю результат, не превращая процесс в ненужную сложность.",
+    servicesKicker: "Мой подход", servicesHeading: "Что стоит", servicesAccent: "за интерфейсом.",
+    servicesIntro: "Эти направления я осваиваю на практике в собственных проектах.",
     services: [
       ["Full-stack разработка", "Сайты и веб-приложения — от адаптивного интерфейса до API, базы данных и готового к развёртыванию кода."],
       ["Развитие существующих проектов", "Исправление ошибок, новые функции, обновление интерфейса и аккуратная работа в существующей кодовой базе."],
-      ["Автоматизация и интеграции", "API, автоматизация рутинных процессов и практичные AI-интеграции там, где они приносят реальную пользу."],
+      ["Данные и логика приложения", "Формы, проверка запросов, модели базы данных и обработка заказов в NovaShop."],
     ],
-    about: "Обо мне", aboutHeading: "Создаю продукт целиком,", aboutAccent: "а не один слой.",
-    aboutOne: "Работаю с фронтендом и бэкендом: адаптивными интерфейсами, логикой приложений, API, аутентификацией и базами данных. Ценю понятный код и удобный результат.",
-    aboutTwo: "Использую AI-инструменты для ускорения рутинных задач, сохраняя решения, проверку и итоговое качество под контролем человека.",
+    about: "Обо мне", aboutHeading: "Учусь, создавая.", aboutAccent: "От задачи к задаче.",
+    aboutOne: "Я Mykola, разработчик из Украины. Работаю с React и TypeScript, изучаю бэкенд на практических задачах.",
+    aboutTwo: "В NovaShop занимался каталогом, корзиной, авторизацией и заказами с сохранением в базе. На этом сайте собираю свои работы и рассказываю, как они устроены.",
     principles: ["Понятная коммуникация", "Практичные решения", "Честная оценка проекта"],
-    contactKicker: "Есть проект?", contactHeading: "Давайте создадим что-то", contactAccent: "полезное.", back: "Наверх",
+    contactKicker: "Есть проект?", contactHeading: "Есть задача", contactAccent: "для обсуждения?", back: "Наверх",
+    caseTask: "Задача",
+    caseTaskText: "Реализовать путь покупки: от выбора товара до оформления заказа и просмотра его статуса.",
+    caseRole: "Моя работа",
+    caseRoleText: "Витрина, состояние корзины, авторизация, проверка заказов и модели базы данных.",
+    stackHeading: "Мои инструменты",
+    skip: "Перейти к проектам",
   },
   uk: {
     nav: { work: "Роботи", services: "Послуги", about: "Про мене", talk: "Зв'язатися" },
-    available: "Відкритий до фриланс-проєктів",
-    heroTitle: "Створюю вебпродукти", heroConnector: "які", heroEmphasis: "працюють.",
-    heroCopy: "Full-Stack розробник, зосереджений на швидких, зрозумілих і надійних сайтах та вебзастосунках — фронтенді, бекенді, API й базах даних.",
-    viewWork: "Переглянути роботи", email: "Написати мені", role: "Full-Stack розробник",
+    available: "Відкритий до обговорення проєктів",
+    heroTitle: "Mykola.", heroConnector: "Веб-", heroEmphasis: "розробник.",
+    heroCopy: "Створюю інтерфейси на React і TypeScript, поєдную їх із логікою застосунку та базою даних. Тут — мої проєкти й деталі їх реалізації.",
+    viewWork: "Переглянути роботи", email: "Написати мені", role: "Веброзробник",
     based: "Перебуваю в Україні", remote: "Працюю по всьому світу", coreSkills: "Основний стек",
-    selectedWork: "Обрана робота", projectHeading: "Один проєкт.", projectAccent: "Повний full-stack.",
-    projectIntro: "Докладний кейс, що поєднує продуктове мислення, інтерфейс, серверну логіку, автентифікацію та проєктування бази даних.",
+    selectedWork: "Обрана робота", projectHeading: "Від інтерфейсу", projectAccent: "до замовлення.",
+    projectIntro: "NovaShop — мій особистий інтернет-магазин. У ньому я реалізував вітрину, сценарій покупки й серверну обробку замовлень.",
     projectType: "Особистий проєкт · 2026",
     projectDescription: "Повноцінний e-commerce застосунок із каталогом, безпечною авторизацією, кошиком, оформленням замовлення, історією покупок і панеллю адміністратора.",
     features: ["Ролі USER / ADMIN", "JWT в httpOnly cookie", "Транзакційні замовлення", "Адаптивний інтерфейс"],
     viewProject: "Відкрити проєкт на GitHub",
-    servicesKicker: "Що я роблю", servicesHeading: "Корисна робота.", servicesAccent: "Без зайвого шуму.",
-    servicesIntro: "Беру зрозуміле завдання, створюю рішення й пояснюю результат, не перетворюючи процес на зайву складність.",
+    servicesKicker: "Мій підхід", servicesHeading: "Що стоїть", servicesAccent: "за інтерфейсом.",
+    servicesIntro: "Ці напрями я опановую на практиці у власних проєктах.",
     services: [
       ["Full-stack розробка", "Сайти та вебзастосунки — від адаптивного інтерфейсу до API, бази даних і готового до розгортання коду."],
       ["Розвиток наявних проєктів", "Виправлення помилок, нові функції, оновлення інтерфейсу й акуратна робота в наявній кодовій базі."],
-      ["Автоматизація та інтеграції", "API, автоматизація рутинних процесів і практичні AI-інтеграції там, де вони створюють реальну цінність."],
+      ["Дані та логіка застосунку", "Форми, перевірка запитів, моделі бази даних і обробка замовлень у NovaShop."],
     ],
-    about: "Про мене", aboutHeading: "Створюю продукт цілком,", aboutAccent: "а не один шар.",
-    aboutOne: "Працюю з фронтендом і бекендом: адаптивними інтерфейсами, логікою застосунків, API, автентифікацією та базами даних. Ціную зрозумілий код і зручний результат.",
-    aboutTwo: "Використовую AI-інструменти для прискорення рутинних завдань, залишаючи рішення, перевірку та фінальну якість під контролем людини.",
+    about: "Про мене", aboutHeading: "Навчаюся, створюючи.", aboutAccent: "Від задачі до задачі.",
+    aboutOne: "Я Mykola, розробник з України. Працюю з React і TypeScript, вивчаю бекенд на практичних задачах.",
+    aboutTwo: "У NovaShop працював над каталогом, кошиком, авторизацією та замовленнями зі збереженням у базі. На цьому сайті збираю свої роботи й розповідаю, як вони влаштовані.",
     principles: ["Зрозуміла комунікація", "Практичні рішення", "Чесна оцінка проєкту"],
-    contactKicker: "Є проєкт?", contactHeading: "Створімо разом щось", contactAccent: "корисне.", back: "Нагору",
+    contactKicker: "Є проєкт?", contactHeading: "Є задача", contactAccent: "для обговорення?", back: "Нагору",
+    caseTask: "Завдання",
+    caseTaskText: "Реалізувати шлях покупки: від вибору товару до оформлення замовлення й перегляду його статусу.",
+    caseRole: "Моя робота",
+    caseRoleText: "Вітрина, стан кошика, авторизація, перевірка замовлень і моделі бази даних.",
+    stackHeading: "Мої інструменти",
+    skip: "Перейти до проєктів",
   },
 };
 
@@ -101,10 +119,21 @@ export default function Home() {
   const [navMode, setNavMode] = useState<NavMode>("hero");
   const languageChangeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const languageFinishTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingLanguage = useRef<Language>("en");
+  const scrollAnchor = useRef<{ element: Element; top: number } | null>(null);
   const t = copy[language];
 
+  useLayoutEffect(() => {
+    const anchor = scrollAnchor.current;
+    if (anchor) {
+      window.scrollBy({ top: anchor.element.getBoundingClientRect().top - anchor.top, behavior: "instant" });
+      scrollAnchor.current = null;
+    }
+  }, [language]);
+
   useEffect(() => {
-    const saved = window.localStorage.getItem("portfolio-language") as Language | null;
+    let saved: Language | null = null;
+    try { saved = window.localStorage.getItem("portfolio-language") as Language | null; } catch {}
     if (saved && languages.some(({ code }) => code === saved)) {
       setLanguage(saved);
       document.documentElement.lang = saved;
@@ -146,27 +175,35 @@ export default function Home() {
   }, []);
 
   function changeLanguage(next: Language) {
-    if (next === language || isLanguageTransitioning) return;
+    pendingLanguage.current = next;
+    if (isLanguageTransitioning) return;
+    if (next === language) return;
 
     const applyLanguage = () => {
-      setLanguage(next);
-      window.localStorage.setItem("portfolio-language", next);
-      document.documentElement.lang = next;
+      const anchor = [...document.querySelectorAll("section, footer")].find(el => el.getBoundingClientRect().bottom > 100);
+      if (anchor) scrollAnchor.current = { element: anchor, top: anchor.getBoundingClientRect().top };
+      const selected = pendingLanguage.current;
+      setLanguage(selected);
+      try { window.localStorage.setItem("portfolio-language", selected); } catch {}
+      document.documentElement.lang = selected;
     };
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       applyLanguage();
       return;
     }
-
     setIsLanguageTransitioning(true);
-    languageChangeTimer.current = setTimeout(applyLanguage, 390);
-    languageFinishTimer.current = setTimeout(() => setIsLanguageTransitioning(false), 900);
+    languageChangeTimer.current = setTimeout(applyLanguage, 180);
+    languageFinishTimer.current = setTimeout(() => {
+      applyLanguage();
+      setIsLanguageTransitioning(false);
+    }, 420);
   }
 
   return (
     <main data-language={language} data-language-transitioning={isLanguageTransitioning || undefined}>
       <div className={`languageWipe${isLanguageTransitioning ? " languageWipe--active" : ""}`} aria-hidden="true" />
+      <a className="skipLink" href="#work">{t.skip}</a>
       <div className="navSlot">
       <div className={`navBar navBar--${navMode}`}>
       <nav className="nav shell" aria-label="Primary navigation">
@@ -190,56 +227,44 @@ export default function Home() {
           <div className="heroActions"><a className="button primary" href="#work">{t.viewWork} <span>↓</span></a><a className="button secondary" href="mailto:nikolasdusyk.99@gmail.com">{t.email}</a></div>
         </div>
         <aside className="heroAside" aria-label="Developer profile summary">
-          <div className="avatarWrap"><img src="https://github.com/BozemanChannel.png?size=512" alt="BozemenOfficial GitHub profile photo" /></div>
+          <div className="avatarWrap"><img src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" /></div>
           <div className="statusCard"><span className="statusDot" /><div><b>BozemenOfficial</b><small>{t.role}</small></div></div>
           <div className="heroMeta"><span>{t.based}</span><span>{t.remote}</span></div>
         </aside>
       </section>
-
-      <div className="ticker" aria-label={t.coreSkills}>
-        <div className="tickerTrack">
-          {[0, 1].map((groupIndex) => (
-            <div className="tickerGroup" aria-hidden={groupIndex === 1 || undefined} key={groupIndex}>
-              {[0, 1, 2].map((sequenceIndex) => (
-                <div
-                  className="tickerSequence"
-                  aria-hidden={(groupIndex === 1 || sequenceIndex > 0) || undefined}
-                  key={sequenceIndex}
-                >
-                  {skills.map((skill) => <span key={skill}>{skill}<i aria-hidden="true">✦</i></span>)}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
 
       <section className="section shell" id="work">
         <div className="sectionHead"><div><p className="kicker">{t.selectedWork}</p><h2>{t.projectHeading}<br /><span>{t.projectAccent}</span></h2></div><p>{t.projectIntro}</p></div>
         <article className="projectCard">
           <div className="projectVisual"><Image src="/novashop-cover.png" alt="NovaShop full-stack e-commerce interface" fill priority sizes="(max-width: 900px) 100vw, 66vw" /><span className="projectType">{t.projectType}</span></div>
           <div className="projectInfo">
-            <div className="projectTitleRow"><h3>NovaShop</h3><span>01</span></div><p>{t.projectDescription}</p>
+            <div className="projectTitleRow"><h3>NovaShop</h3><span>1</span></div><p>{t.projectDescription}</p>
+            <dl className="caseNotes"><div><dt>{t.caseTask}</dt><dd>{t.caseTaskText}</dd></div><div><dt>{t.caseRole}</dt><dd>{t.caseRoleText}</dd></div></dl>
             <ul className="featureList">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-            <div className="tags">{["Next.js 15", "React 19", "TypeScript", "Prisma", "SQLite"].map((tag) => <span key={tag}>{tag}</span>)}</div>
-            <a className="textLink" href="https://github.com/BozemanChannel/novashop" target="_blank" rel="noreferrer">{t.viewProject} <span>↗</span></a>
+            <div className="tags">{["React", "TypeScript", "SQLite"].map((tag) => <span key={tag}>{tag}</span>)}</div>
+            <a className="textLink" href="https://github.com/BozemenOfficial/novashop" target="_blank" rel="noreferrer">{t.viewProject} <span>↗</span></a>
           </div>
         </article>
       </section>
 
+      <section className="skillsSection shell" aria-labelledby="skills-title">
+        <h2 id="skills-title">{t.stackHeading}</h2>
+        <ul>{skills.map(skill => <li key={skill}>{skill}</li>)}</ul>
+      </section>
+
       <section className="servicesSection" id="services"><div className="shell">
         <div className="sectionHead light"><div><p className="kicker">{t.servicesKicker}</p><h2>{t.servicesHeading}<br /><span>{t.servicesAccent}</span></h2></div><p>{t.servicesIntro}</p></div>
-        <div className="serviceGrid">{t.services.map(([title, text], index) => <article className="service" key={title}><span className="serviceNumber">0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+        <div className="serviceGrid">{t.services.map(([title, text], index) => <article className="service" key={title}><span className="serviceNumber">{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </div></section>
 
       <section className="about section shell" id="about">
         <div className="aboutLabel"><span>{t.about}</span><i /></div>
-        <div className="aboutContent"><h2>{t.aboutHeading}<br /><em>{t.aboutAccent}</em></h2><div className="aboutColumns"><p>{t.aboutOne}</p><p>{t.aboutTwo}</p></div><div className="principles">{t.principles.map((principle, index) => <div key={principle}><b>0{index + 1}</b><span>{principle}</span></div>)}</div></div>
+        <div className="aboutContent"><h2>{t.aboutHeading}<br /><em>{t.aboutAccent}</em></h2><div className="aboutColumns"><p>{t.aboutOne}</p><p>{t.aboutTwo}</p></div><div className="principles">{t.principles.map((principle, index) => <div key={principle}><b>{index + 1}</b><span>{principle}</span></div>)}</div></div>
       </section>
 
       <footer>
         <div className="shell footerMain"><p className="kicker">{t.contactKicker}</p><h2>{t.contactHeading}<br /><em>{t.contactAccent}</em></h2><a className="footerEmail" href="mailto:nikolasdusyk.99@gmail.com">nikolasdusyk.99@gmail.com <span>↗</span></a></div>
-        <div className="shell footerBottom"><span>© 2026 BozemenOfficial</span><a href="https://github.com/BozemanChannel" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://t.me/BozemenOfficial" target="_blank" rel="noreferrer">Telegram ↗</a><a href="#top">{t.back} ↑</a></div>
+        <div className="shell footerBottom"><span>© 2026 BozemenOfficial</span><a href="https://github.com/BozemenOfficial" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://t.me/BozemenOfficial" target="_blank" rel="noreferrer">Telegram ↗</a><a href="#top">{t.back} ↑</a></div>
       </footer>
     </main>
   );
