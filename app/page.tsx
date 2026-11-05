@@ -135,8 +135,9 @@ export default function Home() {
     let saved: Language | null = null;
     try { saved = window.localStorage.getItem("portfolio-language") as Language | null; } catch {}
     if (saved && languages.some(({ code }) => code === saved)) {
-      setLanguage(saved);
+      const frame = window.requestAnimationFrame(() => setLanguage(saved));
       document.documentElement.lang = saved;
+      return () => window.cancelAnimationFrame(frame);
     }
   }, []);
 
@@ -229,7 +230,7 @@ export default function Home() {
         <aside className="heroAside" aria-label="Developer profile summary">
           <div className="portraitFrame">
             <div className="heroMeta"><span>{t.based}</span><span>{t.remote}</span></div>
-            <div className="avatarWrap"><img src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" /></div>
+            <div className="avatarWrap"><Image src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" width={512} height={512} unoptimized /></div>
           </div>
           <div className="statusCard"><span className="statusDot" /><div><b>Bozemen</b><small>{t.role}</small></div></div>
         </aside>
