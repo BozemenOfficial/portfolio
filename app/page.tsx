@@ -116,15 +116,15 @@ const copy = {
 const traflumeCopy = {
   en: {
     type: "Telegram platform", description: "A platform for Telegram traffic, promotion and bot monetization. Campaigns, connected resources and integrations come together in one workflow.",
-    features: ["Campaign and order management", "CRM and resource tracking", "REST API and bot integrations"], link: "Explore Traflume", illustration: "Concept illustration",
+    features: ["Campaign and order management", "CRM and resource tracking", "REST API and bot integrations"], link: "Explore Traflume", illustration: "Traflume website and dashboard preview", stack: ["Frontend", "Backend & database", "Telegram bot"],
   },
   ru: {
     type: "Платформа для Telegram", description: "Платформа для Telegram-трафика, продвижения и монетизации ботов. Заказы, подключённые ресурсы и интеграции объединены в одном рабочем процессе.",
-    features: ["Управление заказами и продвижением", "CRM и учёт ресурсов", "REST API и интеграции с ботами"], link: "Открыть Traflume", illustration: "Концептуальная иллюстрация",
+    features: ["Управление заказами и продвижением", "CRM и учёт ресурсов", "REST API и интеграции с ботами"], link: "Открыть Traflume", illustration: "Сайт и личный кабинет Traflume", stack: ["Интерфейс", "Сервер и база данных", "Telegram-бот"],
   },
   uk: {
     type: "Платформа для Telegram", description: "Платформа для Telegram-трафіку, просування та монетизації ботів. Замовлення, підключені ресурси й інтеграції об’єднані в одному робочому процесі.",
-    features: ["Керування замовленнями й просуванням", "CRM та облік ресурсів", "REST API та інтеграції з ботами"], link: "Відкрити Traflume", illustration: "Концептуальна ілюстрація",
+    features: ["Керування замовленнями й просуванням", "CRM та облік ресурсів", "REST API та інтеграції з ботами"], link: "Відкрити Traflume", illustration: "Сайт та особистий кабінет Traflume", stack: ["Інтерфейс", "Сервер і база даних", "Telegram-бот"],
   },
 };
 
@@ -266,15 +266,17 @@ export default function Home() {
         </article>
         <article className="projectCard projectCard--traflume">
           <div className="projectVisual projectVisual--traflume">
-            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/traflume-cover.webp`} alt={traflume.illustration} fill sizes="(max-width: 900px) 100vw, 60vw" />
-            <span className="projectType">{traflume.type}</span>
-            <div className="projectCoverTitle" aria-hidden="true"><span>TELEGRAM · TRAFFIC · TOOLS</span><strong>Traflume<span>↗</span></strong></div>
+            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/traflume-preview.jpg`} alt={traflume.illustration} width={1908} height={949} sizes="(max-width: 900px) 100vw, 60vw" />
           </div>
           <div className="projectInfo">
             <div className="projectTitleRow"><h3>Traflume</h3><span>2</span></div>
             <p>{traflume.description}</p>
             <ul className="featureList">{traflume.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
-            <div className="tags">{["Telegram", "REST API", "CRM"].map(tag => <span key={tag}>{tag}</span>)}</div>
+            <dl className="caseNotes projectStack">
+              <div><dt>{traflume.stack[0]}</dt><dd>React 19 · JavaScript / JSX · CSS · Vite 8 · Motion · Three.js</dd></div>
+              <div><dt>{traflume.stack[1]}</dt><dd>Node.js 24 · REST API · SQLite · Drizzle ORM</dd></div>
+              <div><dt>{traflume.stack[2]}</dt><dd>Python · aiogram 3</dd></div>
+            </dl>
             <a className="textLink" href="https://traflume.org" target="_blank" rel="noreferrer">{traflume.link} <span>↗</span></a>
           </div>
         </article>
