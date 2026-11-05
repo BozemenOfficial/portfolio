@@ -156,7 +156,6 @@ button:active,.button:active { transform:translateY(1px); }
 .projectCard--traflume .projectVisual { background:#111; min-height:0; align-self:center; width:100%; aspect-ratio:auto; border:1px solid var(--line); border-radius:8px; }
 .projectVisual--traflume img { display:block; width:100%; height:auto; object-fit:contain; }
 .projectCard--traflume:hover .projectVisual img { transform:none; }
-.projectStack { padding-top:20px; border-top:1px solid var(--line); }
 .projectInfo { padding:32px; }
 .projectInfo h3 { font-size:38px; }
 .projectInfo>p { margin:20px 0; }

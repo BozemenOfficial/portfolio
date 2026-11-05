@@ -272,11 +272,7 @@ export default function Home() {
             <div className="projectTitleRow"><h3>Traflume</h3><span>2</span></div>
             <p>{traflume.description}</p>
             <ul className="featureList">{traflume.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
-            <dl className="caseNotes projectStack">
-              <div><dt>{traflume.stack[0]}</dt><dd>React 19 · JavaScript / JSX · CSS · Vite 8 · Motion · Three.js</dd></div>
-              <div><dt>{traflume.stack[1]}</dt><dd>Node.js 24 · REST API · SQLite · Drizzle ORM</dd></div>
-              <div><dt>{traflume.stack[2]}</dt><dd>Python · aiogram 3</dd></div>
-            </dl>
+            <div className="tags">{["React", "JavaScript", "CSS", "Vite", "Motion", "Three.js", "Node.js", "SQLite", "Drizzle ORM", "Python", "aiogram"].map(tag => <span key={tag}>{tag}</span>)}</div>
             <a className="textLink" href="https://traflume.org" target="_blank" rel="noreferrer">{traflume.link} <span>↗</span></a>
           </div>
         </article>
