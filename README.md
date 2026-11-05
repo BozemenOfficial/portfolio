@@ -15,7 +15,6 @@ pnpm dev
 pnpm lint
 pnpm typecheck
 pnpm build
-pnpm start
 ```
 
 Set `SITE_URL` to the public deployment URL for absolute social preview links. Local development defaults to `http://localhost:3000`.
@@ -33,6 +32,7 @@ Set `SITE_URL` to the public deployment URL for absolute social preview links. L
 | `public/novashop-cover.png` | NovaShop project preview |
 | `public/og.png` | Social sharing preview |
 | `.gitignore` | Local files and build output excluded from Git |
+| `.github/workflows/pages.yml` | Build checks and automatic GitHub Pages deployment |
 | `eslint.config.mjs` | Next.js lint and TypeScript rules |
 | `next.config.ts` | Next.js configuration |
 | `package.json` | Dependencies and development commands |
@@ -44,4 +44,6 @@ Set `SITE_URL` to the public deployment URL for absolute social preview links. L
 
 ## Deployment
 
-Run `pnpm build`, then `pnpm start` on a Node.js host, or deploy with a platform that supports Next.js. Set `SITE_URL` in the hosting environment before building.
+The live site is https://bozemenofficial.github.io/portfolio/ . Pushes to `main` run lint and build checks, then publish the static `out/` directory through GitHub Actions.
+
+For another static host, run `pnpm build` and serve `out/`. Set `SITE_URL` to the origin and `NEXT_PUBLIC_BASE_PATH` to any subdirectory before building. The Pages workflow uses `/portfolio`; local development uses the root path.

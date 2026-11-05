@@ -239,7 +239,7 @@ export default function Home() {
       <section className="section shell" id="work">
         <div className="sectionHead"><div><p className="kicker">{t.selectedWork}</p><h2>{t.projectHeading}<br /><span>{t.projectAccent}</span></h2></div><p>{t.projectIntro}</p></div>
         <article className="projectCard">
-          <div className="projectVisual"><Image src="/novashop-cover.png" alt="NovaShop full-stack e-commerce interface" fill priority sizes="(max-width: 900px) 100vw, 66vw" /><span className="projectType">{t.projectType}</span></div>
+          <div className="projectVisual"><Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/novashop-cover.png`} alt="NovaShop full-stack e-commerce interface" fill priority sizes="(max-width: 900px) 100vw, 66vw" /><span className="projectType">{t.projectType}</span></div>
           <div className="projectInfo">
             <div className="projectTitleRow"><h3>NovaShop</h3><span>1</span></div><p>{t.projectDescription}</p>
             <dl className="caseNotes"><div><dt>{t.caseTask}</dt><dd>{t.caseTaskText}</dd></div><div><dt>{t.caseRole}</dt><dd>{t.caseRoleText}</dd></div></dl>

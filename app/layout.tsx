@@ -9,20 +9,23 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+
 export const metadata: Metadata = {
+  icons: { icon: `${basePath}/favicon.svg` },
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
   title: "Bozemen — Web Developer · Full Stack",
   description: "Personal portfolio: React and TypeScript interfaces, NovaShop and practical web development.",
   openGraph: {
     title: "Bozemen — Web Developer · Full Stack",
     description: "Explore NovaShop, my tools and the work behind the interface.",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Bozemen — Web Developer · Full Stack" }],
+    images: [{ url: `${basePath}/og.png`, width: 1200, height: 630, alt: "Bozemen — Web Developer · Full Stack" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Bozemen — Web Developer · Full Stack",
     description: "Explore NovaShop, my tools and the work behind the interface.",
-    images: ["/og.png"],
+    images: [`${basePath}/og.png`],
   },
 };
 
