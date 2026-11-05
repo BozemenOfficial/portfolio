@@ -22,8 +22,8 @@ const copy = {
     heroCopy: "I build interfaces with React and TypeScript and connect them to application logic and databases. Here is what I have built so far.",
     viewWork: "View selected work", email: "Email me", role: "Web Developer · Full Stack",
     based: "Based in Ukraine", remote: "Remote worldwide", coreSkills: "Core skills",
-    selectedWork: "Selected work", projectHeading: "From interface", projectAccent: "to checkout.",
-    projectIntro: "NovaShop is my personal ecommerce project. I built the storefront, shopping flow and server-side order logic.",
+    selectedWork: "Selected work", projectHeading: "From interface", projectAccent: "to a working product.",
+    projectIntro: "Ecommerce and Telegram tools: projects that connect interfaces, application logic and integrations.",
     projectType: "Personal project · 2026",
     projectDescription: "A complete e-commerce application with product catalog, secure authentication, cart, checkout, order history and admin tools.",
     features: ["USER / ADMIN roles", "JWT in httpOnly cookie", "Transactional orders", "Responsive interface"],
@@ -54,8 +54,8 @@ const copy = {
     heroCopy: "Создаю интерфейсы на React и TypeScript, связываю их с логикой приложения и базой данных. Здесь — мои проекты и детали их реализации.",
     viewWork: "Смотреть работы", email: "Написать мне", role: "Веб-разработчик · Full Stack",
     based: "Нахожусь в Украине", remote: "Работаю по всему миру", coreSkills: "Основной стек",
-    selectedWork: "Избранная работа", projectHeading: "От интерфейса", projectAccent: "до заказа.",
-    projectIntro: "NovaShop — мой личный интернет-магазин. В нём я реализовал витрину, сценарий покупки и серверную обработку заказов.",
+    selectedWork: "Избранные проекты", projectHeading: "От интерфейса", projectAccent: "до рабочего продукта.",
+    projectIntro: "Интернет-магазин и инструменты для Telegram: проекты, в которых интерфейс связан с логикой приложения и интеграциями.",
     projectType: "Личный проект · 2026",
     projectDescription: "Полноценное e-commerce приложение с каталогом, безопасной авторизацией, корзиной, оформлением заказа, историей покупок и панелью администратора.",
     features: ["Роли USER / ADMIN", "JWT в httpOnly cookie", "Транзакционные заказы", "Адаптивный интерфейс"],
@@ -86,8 +86,8 @@ const copy = {
     heroCopy: "Створюю інтерфейси на React і TypeScript, поєдную їх із логікою застосунку та базою даних. Тут — мої проєкти й деталі їх реалізації.",
     viewWork: "Переглянути роботи", email: "Написати мені", role: "Веброзробник · Full Stack",
     based: "Перебуваю в Україні", remote: "Працюю по всьому світу", coreSkills: "Основний стек",
-    selectedWork: "Обрана робота", projectHeading: "Від інтерфейсу", projectAccent: "до замовлення.",
-    projectIntro: "NovaShop — мій особистий інтернет-магазин. У ньому я реалізував вітрину, сценарій покупки й серверну обробку замовлень.",
+    selectedWork: "Обрані проєкти", projectHeading: "Від інтерфейсу", projectAccent: "до робочого продукту.",
+    projectIntro: "Інтернет-магазин та інструменти для Telegram: проєкти, у яких інтерфейс поєднаний із логікою застосунку й інтеграціями.",
     projectType: "Особистий проєкт · 2026",
     projectDescription: "Повноцінний e-commerce застосунок із каталогом, безпечною авторизацією, кошиком, оформленням замовлення, історією покупок і панеллю адміністратора.",
     features: ["Ролі USER / ADMIN", "JWT в httpOnly cookie", "Транзакційні замовлення", "Адаптивний інтерфейс"],
@@ -113,6 +113,21 @@ const copy = {
   },
 };
 
+const traflumeCopy = {
+  en: {
+    type: "Telegram platform", description: "A platform for Telegram traffic, promotion and bot monetization. Campaigns, connected resources and integrations come together in one workflow.",
+    features: ["Campaign and order management", "CRM and resource tracking", "REST API and bot integrations"], link: "Explore Traflume", illustration: "Concept illustration",
+  },
+  ru: {
+    type: "Платформа для Telegram", description: "Платформа для Telegram-трафика, продвижения и монетизации ботов. Заказы, подключённые ресурсы и интеграции объединены в одном рабочем процессе.",
+    features: ["Управление заказами и продвижением", "CRM и учёт ресурсов", "REST API и интеграции с ботами"], link: "Открыть Traflume", illustration: "Концептуальная иллюстрация",
+  },
+  uk: {
+    type: "Платформа для Telegram", description: "Платформа для Telegram-трафіку, просування та монетизації ботів. Замовлення, підключені ресурси й інтеграції об’єднані в одному робочому процесі.",
+    features: ["Керування замовленнями й просуванням", "CRM та облік ресурсів", "REST API та інтеграції з ботами"], link: "Відкрити Traflume", illustration: "Концептуальна ілюстрація",
+  },
+};
+
 export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false);
@@ -122,6 +137,7 @@ export default function Home() {
   const pendingLanguage = useRef<Language>("en");
   const scrollAnchor = useRef<{ element: Element; top: number } | null>(null);
   const t = copy[language];
+  const traflume = traflumeCopy[language];
 
   useLayoutEffect(() => {
     const anchor = scrollAnchor.current;
@@ -246,6 +262,20 @@ export default function Home() {
             <ul className="featureList">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
             <div className="tags">{["React", "TypeScript", "SQLite"].map((tag) => <span key={tag}>{tag}</span>)}</div>
             <a className="textLink" href="https://github.com/BozemenOfficial/novashop" target="_blank" rel="noreferrer">{t.viewProject} <span>↗</span></a>
+          </div>
+        </article>
+        <article className="projectCard projectCard--traflume">
+          <div className="projectVisual projectVisual--traflume">
+            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/traflume-cover.webp`} alt={traflume.illustration} fill sizes="(max-width: 900px) 100vw, 60vw" />
+            <span className="projectType">{traflume.type}</span>
+            <div className="projectCoverTitle" aria-hidden="true"><span>TELEGRAM · TRAFFIC · TOOLS</span><strong>Traflume<span>↗</span></strong></div>
+          </div>
+          <div className="projectInfo">
+            <div className="projectTitleRow"><h3>Traflume</h3><span>2</span></div>
+            <p>{traflume.description}</p>
+            <ul className="featureList">{traflume.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
+            <div className="tags">{["Telegram", "REST API", "CRM"].map(tag => <span key={tag}>{tag}</span>)}</div>
+            <a className="textLink" href="https://traflume.org" target="_blank" rel="noreferrer">{traflume.link} <span>↗</span></a>
           </div>
         </article>
       </section>

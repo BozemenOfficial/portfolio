@@ -152,6 +152,13 @@ button:active,.button:active { transform:translateY(1px); }
 .projectCard { grid-template-columns:minmax(0,1.2fr) minmax(320px,1fr); background:transparent; border-inline:0; }
 .projectVisual { min-height:620px; }
 .projectVisual img { object-fit:contain; }
+.projectCard--traflume { margin-top:56px; }
+.projectVisual--traflume { background:#e8eadf; }
+.projectVisual--traflume img { object-fit:cover; }
+.projectCoverTitle { position:absolute; inset:auto 30px 30px; color:#24331c; pointer-events:none; }
+.projectCoverTitle>span { font:500 10px/1.5 var(--font-geist-mono); letter-spacing:.12em; }
+.projectCoverTitle strong { display:flex; align-items:center; justify-content:space-between; margin-top:8px; font-size:clamp(30px,4vw,54px); letter-spacing:-.05em; font-weight:600; }
+.projectCoverTitle strong span { font-size:32px; font-weight:400; }
 .projectInfo { padding:32px; }
 .projectInfo h3 { font-size:38px; }
 .projectInfo>p { margin:20px 0; }
