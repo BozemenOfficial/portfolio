@@ -116,17 +116,37 @@ const copy = {
 const traflumeCopy = {
   en: {
     type: "Telegram platform", description: "A platform for Telegram traffic, promotion and bot monetization. Campaigns, connected resources and integrations come together in one workflow.",
-    features: ["Campaign and order management", "CRM and resource tracking", "REST API and bot integrations"], link: "Explore Traflume", illustration: "Traflume website and dashboard preview", stack: ["Frontend", "Backend & database", "Telegram bot"],
+    features: ["Campaign and order management", "CRM and resource tracking", "REST API and bot integrations"], link: "Explore Traflume", illustration: "Traflume website and dashboard preview",
   },
   ru: {
     type: "Платформа для Telegram", description: "Платформа для Telegram-трафика, продвижения и монетизации ботов. Заказы, подключённые ресурсы и интеграции объединены в одном рабочем процессе.",
-    features: ["Управление заказами и продвижением", "CRM и учёт ресурсов", "REST API и интеграции с ботами"], link: "Открыть Traflume", illustration: "Сайт и личный кабинет Traflume", stack: ["Интерфейс", "Сервер и база данных", "Telegram-бот"],
+    features: ["Управление заказами и продвижением", "CRM и учёт ресурсов", "REST API и интеграции с ботами"], link: "Открыть Traflume", illustration: "Сайт и личный кабинет Traflume",
   },
   uk: {
     type: "Платформа для Telegram", description: "Платформа для Telegram-трафіку, просування та монетизації ботів. Замовлення, підключені ресурси й інтеграції об’єднані в одному робочому процесі.",
-    features: ["Керування замовленнями й просуванням", "CRM та облік ресурсів", "REST API та інтеграції з ботами"], link: "Відкрити Traflume", illustration: "Сайт та особистий кабінет Traflume", stack: ["Інтерфейс", "Сервер і база даних", "Telegram-бот"],
+    features: ["Керування замовленнями й просуванням", "CRM та облік ресурсів", "REST API та інтеграції з ботами"], link: "Відкрити Traflume", illustration: "Сайт та особистий кабінет Traflume",
   },
 };
+
+type ProjectProps = {
+  name: string; number: number; image: string; alt: string; width: number; height: number;
+  description: string; features: readonly string[]; tags: readonly string[]; href: string; link: string;
+  notes?: { title: string; text: string }[];
+};
+
+function ProjectCard(project: ProjectProps) {
+  return <article className="projectCard" aria-labelledby={`project-${project.number}`}>
+    <div className="projectVisual"><Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${project.image}`} alt={project.alt} width={project.width} height={project.height} sizes="(max-width: 900px) 100vw, 55vw" /></div>
+    <div className="projectInfo">
+      <div className="projectTitleRow"><h3 id={`project-${project.number}`}>{project.name}</h3><span aria-hidden="true">{project.number}</span></div>
+      <p>{project.description}</p>
+      {project.notes && <dl className="caseNotes">{project.notes.map(note => <div key={note.title}><dt>{note.title}</dt><dd>{note.text}</dd></div>)}</dl>}
+      <ul className="featureList">{project.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
+      <div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
+      <a className="textLink" href={project.href} target="_blank" rel="noopener noreferrer">{project.link} <span aria-hidden="true">↗</span></a>
+    </div>
+  </article>;
+}
 
 export default function Home() {
   const [language, setLanguage] = useState<Language>("en");
@@ -212,7 +232,6 @@ export default function Home() {
     setIsLanguageTransitioning(true);
     languageChangeTimer.current = setTimeout(applyLanguage, 180);
     languageFinishTimer.current = setTimeout(() => {
-      applyLanguage();
       setIsLanguageTransitioning(false);
     }, 420);
   }
@@ -222,13 +241,13 @@ export default function Home() {
       <div className={`languageWipe${isLanguageTransitioning ? " languageWipe--active" : ""}`} aria-hidden="true" />
       <a className="skipLink" href="#work">{t.skip}</a>
       <div className="navSlot">
-      <div className={`navBar navBar--${navMode}`}>
+      <div className={`navBar navBar--${navMode}`} onFocusCapture={() => setNavMode("visible")}>
       <nav className="nav shell" aria-label="Primary navigation">
         <a className="brand" href="#top" aria-label="BozemenOfficial — home">BO<span>.</span></a>
         <div className="navLinks"><a href="#work">{t.nav.work}</a><a href="#services">{t.nav.services}</a><a href="#about">{t.nav.about}</a></div>
         <div className="navActions">
           <div className="languageSwitch" aria-label="Language selector" aria-busy={isLanguageTransitioning || undefined}>
-            {languages.map(({ code, label, title }) => <button key={code} type="button" title={title} aria-pressed={language === code} onClick={() => changeLanguage(code)}>{label}</button>)}
+            {languages.map(({ code, label, title }) => <button key={code} type="button" title={title} aria-label={title} aria-pressed={language === code} onClick={() => changeLanguage(code)}>{label}</button>)}
           </div>
           <a className="navCta" href="mailto:nikolasdusyk.99@gmail.com">{t.nav.talk} <span aria-hidden="true">↗</span></a>
         </div>
@@ -246,7 +265,7 @@ export default function Home() {
         <aside className="heroAside" aria-label="Developer profile summary">
           <div className="portraitFrame">
             <div className="heroMeta"><span>{t.based}</span><span>{t.remote}</span></div>
-            <div className="avatarWrap"><Image src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" width={512} height={512} unoptimized /></div>
+            <div className="avatarWrap"><Image src="https://github.com/BozemenOfficial.png?size=512" alt="BozemenOfficial GitHub profile photo" width={250} height={250} fetchPriority="high" unoptimized referrerPolicy="no-referrer" /></div>
           </div>
           <div className="statusCard"><span className="statusDot" /><div><b>Bozemen</b><small>{t.role}</small></div></div>
         </aside>
@@ -254,28 +273,8 @@ export default function Home() {
 
       <section className="section shell" id="work">
         <div className="sectionHead"><div><p className="kicker">{t.selectedWork}</p><h2>{t.projectHeading}<br /><span>{t.projectAccent}</span></h2></div><p>{t.projectIntro}</p></div>
-        <article className="projectCard">
-          <div className="projectVisual"><Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/novashop-cover.png`} alt="NovaShop full-stack e-commerce interface" fill priority sizes="(max-width: 900px) 100vw, 66vw" /><span className="projectType">{t.projectType}</span></div>
-          <div className="projectInfo">
-            <div className="projectTitleRow"><h3>NovaShop</h3><span>1</span></div><p>{t.projectDescription}</p>
-            <dl className="caseNotes"><div><dt>{t.caseTask}</dt><dd>{t.caseTaskText}</dd></div><div><dt>{t.caseRole}</dt><dd>{t.caseRoleText}</dd></div></dl>
-            <ul className="featureList">{t.features.map((feature) => <li key={feature}>{feature}</li>)}</ul>
-            <div className="tags">{["React", "TypeScript", "SQLite"].map((tag) => <span key={tag}>{tag}</span>)}</div>
-            <a className="textLink" href="https://github.com/BozemenOfficial/novashop" target="_blank" rel="noreferrer">{t.viewProject} <span>↗</span></a>
-          </div>
-        </article>
-        <article className="projectCard projectCard--traflume">
-          <div className="projectVisual projectVisual--traflume">
-            <Image src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/traflume-preview.jpg`} alt={traflume.illustration} width={1908} height={949} sizes="(max-width: 900px) 100vw, 60vw" />
-          </div>
-          <div className="projectInfo">
-            <div className="projectTitleRow"><h3>Traflume</h3><span>2</span></div>
-            <p>{traflume.description}</p>
-            <ul className="featureList">{traflume.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
-            <div className="tags">{["React", "JavaScript", "CSS", "Vite", "Motion", "Three.js", "Node.js", "SQLite", "Drizzle ORM", "Python", "aiogram"].map(tag => <span key={tag}>{tag}</span>)}</div>
-            <a className="textLink" href="https://traflume.org" target="_blank" rel="noreferrer">{traflume.link} <span>↗</span></a>
-          </div>
-        </article>
+        <ProjectCard name="NovaShop" number={1} image="novashop-cover.webp" alt="NovaShop full-stack e-commerce interface" width={1295} height={831} description={t.projectDescription} features={t.features} tags={["React", "TypeScript", "SQLite"]} href="https://github.com/BozemenOfficial/novashop" link={t.viewProject} notes={[{title:t.caseTask,text:t.caseTaskText},{title:t.caseRole,text:t.caseRoleText}]} />
+        <ProjectCard name="Traflume" number={2} image="traflume-preview.jpg" alt={traflume.illustration} width={1903} height={951} description={traflume.description} features={traflume.features} tags={["React", "JavaScript", "CSS", "Vite", "Motion", "Three.js", "Node.js", "SQLite", "Drizzle ORM", "Python", "aiogram"]} href="https://traflume.org" link={traflume.link} />
       </section>
 
       <section className="skillsSection shell" aria-labelledby="skills-title">

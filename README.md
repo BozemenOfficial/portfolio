@@ -29,7 +29,7 @@ Set `SITE_URL` to the public deployment URL for absolute social preview links. L
 | `app/globals.css` | Responsive styles, colors and animations |
 | `public/` | Static images served directly by the application |
 | `public/favicon.svg` | Browser tab icon |
-| `public/novashop-cover.png` | NovaShop project preview |
+| `public/novashop-cover.webp` | NovaShop project preview |
 | `public/traflume-preview.jpg` | Traflume website screenshot |
 | `public/og.png` | Social sharing preview |
 | `.gitignore` | Local files and build output excluded from Git |

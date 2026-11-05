@@ -242,3 +242,32 @@ footer { background:#e0e5d2; padding-top:76px; }
     font-size:10px;
   }
 }
+
+/* Shared project layout and accessible responsive navigation. */
+.projectCard { align-items:start; gap:32px; padding-block:32px; }
+.projectCard + .projectCard { margin-top:40px; }
+.projectCard .projectVisual { width:100%; min-height:0; aspect-ratio:auto; align-self:center; border:1px solid var(--line); border-radius:8px; background:#111; }
+.projectCard .projectVisual img { position:static; display:block; width:100%; height:auto; object-fit:contain; transform:none; }
+.projectCard:hover .projectVisual img { transform:none; }
+.projectInfo { min-width:0; padding:0; }
+.heroMain,.sectionHead>*,.aboutContent,.service>* { min-width:0; }
+.sectionHead h2,.aboutContent h2,.footerMain h2 { overflow-wrap:break-word; text-wrap:balance; }
+.textLink { line-height:1.6; min-height:44px; display:inline-flex; align-items:center; }
+.languageSwitch button { min-width:44px; min-height:44px; }
+.tags span { line-height:1.4; }
+.hero h1 em:hover { color:#6b8e23; }
+.button.primary:hover,.button.primary:focus-visible { background:#526d24; border-color:#526d24; }
+.navBar:focus-within { transform:none; visibility:visible; }
+@media(max-width:620px) {
+ .nav { flex-wrap:wrap; height:auto !important; min-height:108px; padding-block:10px; gap:8px; }
+ .navSlot { height:108px; }
+ .navLinks { display:flex; order:3; width:100%; justify-content:space-between; gap:12px; }
+ .navLinks a { padding:10px 0; }
+ .navBar { height:auto; }
+ .languageWipe { top:108px; }
+ .hero { gap:20px; }
+ .hero h1 { min-height:3.24em; }
+ .projectCard { gap:24px; }
+ .projectInfo { padding:0; }
+ .section { scroll-margin-top:120px; }
+}

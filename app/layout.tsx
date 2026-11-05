@@ -6,7 +6,7 @@ const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin", "cyrill
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700"],
 });
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
