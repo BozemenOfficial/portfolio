@@ -137,7 +137,7 @@ main[data-language="ru"] .hero h1,main[data-language="uk"] .hero h1 { font-size:
 .projectInfo h3 { margin:0; font-size:45px; letter-spacing:-.055em; }
 .projectTitleRow>span { color:#898c82; font:500 12px/1 var(--font-geist-mono); }
 .projectInfo>p { color:#62645c; line-height:1.65; margin:22px 0 28px; }
-.featureList { width:fit-content; max-width:100%; list-style:none; padding:0; margin:0; border-top:1px solid var(--line); }
+.featureList { width:fit-content; max-width:calc(100% - 24px); list-style:none; padding:0; margin:0; border-top:1px solid var(--line); }
 .featureList li { padding:11px 20px 11px 0; border-bottom:1px solid var(--line); font-size:13px; }
 .featureList li::before { content:"+"; color:#719800; font-weight:800; margin-right:10px; }
 .tags { display:flex; flex-wrap:wrap; gap:7px; margin:26px 0; }
