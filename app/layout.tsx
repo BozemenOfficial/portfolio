@@ -11,6 +11,12 @@ const plexMono = IBM_Plex_Mono({
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
+// Apply a saved theme before the page paints. CSS handles the system default.
+const themeScript = `try {
+  var theme = localStorage.getItem("portfolio-theme");
+  if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+} catch {}`;
+
 export const metadata: Metadata = {
   icons: { icon: `${basePath}/favicon.svg` },
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
@@ -30,5 +36,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${manrope.variable} ${plexMono.variable}`}>{children}</body></html>;
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
+      <body className={`${manrope.variable} ${plexMono.variable}`}>{children}</body>
+    </html>
+  );
 }

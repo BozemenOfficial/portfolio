@@ -4,19 +4,31 @@ import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type Language = "en" | "ru" | "uk";
+type LanguagePreference = Language | "browser";
+type Theme = "system" | "light" | "dark";
 type NavMode = "hero" | "visible" | "hidden";
 
-const languages: { code: Language; label: string; title: string }[] = [
-  { code: "en", label: "EN", title: "English" },
-  { code: "ru", label: "RU", title: "Русский" },
-  { code: "uk", label: "UA", title: "Українська" },
+const languages: { code: Language; label: string }[] = [
+  { code: "en", label: "English" },
+  { code: "ru", label: "Русский" },
+  { code: "uk", label: "Українська" },
 ];
+
+function isLanguage(value: string | null): value is Language {
+  return languages.some(({ code }) => code === value);
+}
+
+function getBrowserLanguage(): Language {
+  const preferred = navigator.languages.length ? navigator.languages : [navigator.language];
+  return preferred.map(locale => locale.toLowerCase().split("-")[0]).find(isLanguage) ?? "en";
+}
 
 const skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Node.js", "GitHub", "npm", "Python", "SQLite", "VS Code", "Tailwind CSS", "Docker"];
 
 const copy = {
   en: {
     nav: { work: "Work", services: "Services", about: "About", talk: "Let's talk" },
+    preferences: { language: "Language", browser: "Browser language", theme: "Theme", system: "System theme", light: "Light", dark: "Dark" },
     available: "Open to project enquiries",
     heroTitle: "Bozemen.", heroConnector: "Web", heroEmphasis: "developer.",
     heroCopy: "I build interfaces with React and TypeScript and connect them to application logic and databases. Here is what I have built so far.",
@@ -49,6 +61,7 @@ const copy = {
   },
   ru: {
     nav: { work: "Работы", services: "Услуги", about: "Обо мне", talk: "Связаться" },
+    preferences: { language: "Язык", browser: "Язык браузера", theme: "Тема", system: "Системная", light: "Светлая", dark: "Тёмная" },
     available: "Открыт к обсуждению проектов",
     heroTitle: "Bozemen.", heroConnector: "Веб-", heroEmphasis: "разработчик.",
     heroCopy: "Создаю интерфейсы на React и TypeScript, связываю их с логикой приложения и базой данных. Здесь — мои проекты и детали их реализации.",
@@ -81,6 +94,7 @@ const copy = {
   },
   uk: {
     nav: { work: "Роботи", services: "Послуги", about: "Про мене", talk: "Зв'язатися" },
+    preferences: { language: "Мова", browser: "Мова браузера", theme: "Тема", system: "Системна", light: "Світла", dark: "Темна" },
     available: "Відкритий до обговорення проєктів",
     heroTitle: "Bozemen.", heroConnector: "Веб-", heroEmphasis: "розробник.",
     heroCopy: "Створюю інтерфейси на React і TypeScript, поєдную їх із логікою застосунку та базою даних. Тут — мої проєкти й деталі їх реалізації.",
@@ -149,17 +163,19 @@ function ProjectCard(project: ProjectProps) {
 }
 
 export default function Home() {
-  const [language, setLanguage] = useState<Language>("en");
+  const [languagePreference, setLanguagePreference] = useState<LanguagePreference>("browser");
+  const [browserLanguage, setBrowserLanguage] = useState<Language>("en");
+  const [theme, setTheme] = useState<Theme>("system");
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false);
   const [navMode, setNavMode] = useState<NavMode>("hero");
-  const languageChangeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const languageFinishTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pendingLanguage = useRef<Language>("en");
   const scrollAnchor = useRef<{ element: Element; top: number } | null>(null);
+  const language = languagePreference === "browser" ? browserLanguage : languagePreference;
   const t = copy[language];
   const traflume = traflumeCopy[language];
 
   useLayoutEffect(() => {
+    document.documentElement.lang = language;
     const anchor = scrollAnchor.current;
     if (anchor) {
       window.scrollBy({ top: anchor.element.getBoundingClientRect().top - anchor.top, behavior: "instant" });
@@ -168,17 +184,24 @@ export default function Home() {
   }, [language]);
 
   useEffect(() => {
-    let saved: Language | null = null;
-    try { saved = window.localStorage.getItem("portfolio-language") as Language | null; } catch {}
-    if (saved && languages.some(({ code }) => code === saved)) {
-      const frame = window.requestAnimationFrame(() => setLanguage(saved));
-      document.documentElement.lang = saved;
-      return () => window.cancelAnimationFrame(frame);
-    }
+    const frame = window.requestAnimationFrame(() => {
+      setBrowserLanguage(getBrowserLanguage());
+      const savedTheme = document.documentElement.dataset.theme;
+      if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
+      try {
+        const savedLanguage = window.localStorage.getItem("portfolio-language");
+        if (isLanguage(savedLanguage)) setLanguagePreference(savedLanguage);
+      } catch {}
+    });
+    const updateBrowserLanguage = () => setBrowserLanguage(getBrowserLanguage());
+    window.addEventListener("languagechange", updateBrowserLanguage);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("languagechange", updateBrowserLanguage);
+    };
   }, []);
 
   useEffect(() => () => {
-    if (languageChangeTimer.current) clearTimeout(languageChangeTimer.current);
     if (languageFinishTimer.current) clearTimeout(languageFinishTimer.current);
   }, []);
 
@@ -211,29 +234,25 @@ export default function Home() {
     return () => window.removeEventListener("scroll", updateNavigation);
   }, []);
 
-  function changeLanguage(next: Language) {
-    pendingLanguage.current = next;
-    if (isLanguageTransitioning) return;
-    if (next === language) return;
-
-    const applyLanguage = () => {
+  function changeLanguage(next: LanguagePreference) {
+    const nextLanguage = next === "browser" ? browserLanguage : next;
+    if (nextLanguage !== language) {
       const anchor = [...document.querySelectorAll("section, footer")].find(el => el.getBoundingClientRect().bottom > 100);
       if (anchor) scrollAnchor.current = { element: anchor, top: anchor.getBoundingClientRect().top };
-      const selected = pendingLanguage.current;
-      setLanguage(selected);
-      try { window.localStorage.setItem("portfolio-language", selected); } catch {}
-      document.documentElement.lang = selected;
-    };
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      applyLanguage();
-      return;
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        if (languageFinishTimer.current) clearTimeout(languageFinishTimer.current);
+        setIsLanguageTransitioning(true);
+        languageFinishTimer.current = setTimeout(() => setIsLanguageTransitioning(false), 420);
+      }
     }
-    setIsLanguageTransitioning(true);
-    languageChangeTimer.current = setTimeout(applyLanguage, 180);
-    languageFinishTimer.current = setTimeout(() => {
-      setIsLanguageTransitioning(false);
-    }, 420);
+    setLanguagePreference(next);
+    try { window.localStorage.setItem("portfolio-language", next); } catch {}
+  }
+
+  function changeTheme(next: Theme) {
+    document.documentElement.dataset.theme = next;
+    setTheme(next);
+    try { window.localStorage.setItem("portfolio-theme", next); } catch {}
   }
 
   return (
@@ -246,8 +265,16 @@ export default function Home() {
         <a className="brand" href="#top" aria-label="BozemenOfficial — home">BO<span>.</span></a>
         <div className="navLinks"><a href="#work">{t.nav.work}</a><a href="#services">{t.nav.services}</a><a href="#about">{t.nav.about}</a></div>
         <div className="navActions">
-          <div className="languageSwitch" aria-label="Language selector" aria-busy={isLanguageTransitioning || undefined}>
-            {languages.map(({ code, label, title }) => <button key={code} type="button" title={title} aria-label={title} aria-pressed={language === code} onClick={() => changeLanguage(code)}>{label}</button>)}
+          <div className="navPreferences">
+            <select className="preferenceSelect" aria-label={t.preferences.language} value={languagePreference} onChange={event => changeLanguage(event.target.value as LanguagePreference)}>
+              <option value="browser">{t.preferences.browser}</option>
+              {languages.map(({ code, label }) => <option key={code} value={code} lang={code}>{label}</option>)}
+            </select>
+            <select className="preferenceSelect" aria-label={t.preferences.theme} value={theme} onChange={event => changeTheme(event.target.value as Theme)}>
+              <option value="system">{t.preferences.system}</option>
+              <option value="light">{t.preferences.light}</option>
+              <option value="dark">{t.preferences.dark}</option>
+            </select>
           </div>
           <a className="navCta" href="mailto:nikolasdusyk.99@gmail.com">{t.nav.talk} <span aria-hidden="true">↗</span></a>
         </div>
