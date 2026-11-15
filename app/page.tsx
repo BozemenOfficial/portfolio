@@ -4,14 +4,13 @@ import Image from "next/image";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 type Language = "en" | "ru" | "uk";
-type LanguagePreference = Language | "browser";
-type Theme = "system" | "light" | "dark";
+type Theme = "light" | "dark";
 type NavMode = "hero" | "visible" | "hidden";
 
-const languages: { code: Language; label: string }[] = [
-  { code: "en", label: "English" },
-  { code: "ru", label: "Русский" },
-  { code: "uk", label: "Українська" },
+const languages: { code: Language; label: string; title: string }[] = [
+  { code: "en", label: "EN", title: "English" },
+  { code: "ru", label: "RU", title: "Русский" },
+  { code: "uk", label: "UA", title: "Українська" },
 ];
 
 function isLanguage(value: string | null): value is Language {
@@ -28,11 +27,11 @@ const skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Node.js", "
 const copy = {
   en: {
     nav: { work: "Work", services: "Services", about: "About", talk: "Let's talk" },
-    preferences: { language: "Language", browser: "Browser language", theme: "Theme", system: "System theme", light: "Light", dark: "Dark" },
+    preferences: { language: "Language", light: "Switch to light theme", dark: "Switch to dark theme" },
     available: "Open to project enquiries",
-    heroTitle: "Bozemen.", heroConnector: "Web", heroEmphasis: "developer.",
+    heroTitle: "Bozemen.", heroConnector: "Full Stack", heroEmphasis: "developer.",
     heroCopy: "I build interfaces with React and TypeScript and connect them to application logic and databases. Here is what I have built so far.",
-    viewWork: "View selected work", email: "Email me", role: "Web Developer · Full Stack",
+    viewWork: "View selected work", email: "Email me", role: "Full-Stack Developer",
     based: "Based in Ukraine", remote: "Remote worldwide", coreSkills: "Core skills",
     selectedWork: "Selected work", projectHeading: "From interface", projectAccent: "to a working product.",
     projectIntro: "Ecommerce and Telegram tools: projects that connect interfaces, application logic and integrations.",
@@ -61,11 +60,11 @@ const copy = {
   },
   ru: {
     nav: { work: "Работы", services: "Услуги", about: "Обо мне", talk: "Связаться" },
-    preferences: { language: "Язык", browser: "Язык браузера", theme: "Тема", system: "Системная", light: "Светлая", dark: "Тёмная" },
+    preferences: { language: "Язык", light: "Включить светлую тему", dark: "Включить тёмную тему" },
     available: "Открыт к обсуждению проектов",
-    heroTitle: "Bozemen.", heroConnector: "Веб-", heroEmphasis: "разработчик.",
+    heroTitle: "Bozemen.", heroConnector: "Full Stack", heroEmphasis: "разработчик.",
     heroCopy: "Создаю интерфейсы на React и TypeScript, связываю их с логикой приложения и базой данных. Здесь — мои проекты и детали их реализации.",
-    viewWork: "Смотреть работы", email: "Написать мне", role: "Веб-разработчик · Full Stack",
+    viewWork: "Смотреть работы", email: "Написать мне", role: "Фулстек-разработчик",
     based: "Нахожусь в Украине", remote: "Работаю по всему миру", coreSkills: "Основной стек",
     selectedWork: "Избранные проекты", projectHeading: "От интерфейса", projectAccent: "до рабочего продукта.",
     projectIntro: "Интернет-магазин и инструменты для Telegram: проекты, в которых интерфейс связан с логикой приложения и интеграциями.",
@@ -94,11 +93,11 @@ const copy = {
   },
   uk: {
     nav: { work: "Роботи", services: "Послуги", about: "Про мене", talk: "Зв'язатися" },
-    preferences: { language: "Мова", browser: "Мова браузера", theme: "Тема", system: "Системна", light: "Світла", dark: "Темна" },
+    preferences: { language: "Мова", light: "Увімкнути світлу тему", dark: "Увімкнути темну тему" },
     available: "Відкритий до обговорення проєктів",
-    heroTitle: "Bozemen.", heroConnector: "Веб-", heroEmphasis: "розробник.",
+    heroTitle: "Bozemen.", heroConnector: "Full Stack", heroEmphasis: "розробник.",
     heroCopy: "Створюю інтерфейси на React і TypeScript, поєдную їх із логікою застосунку та базою даних. Тут — мої проєкти й деталі їх реалізації.",
-    viewWork: "Переглянути роботи", email: "Написати мені", role: "Веброзробник · Full Stack",
+    viewWork: "Переглянути роботи", email: "Написати мені", role: "Фулстек-розробник",
     based: "Перебуваю в Україні", remote: "Працюю по всьому світу", coreSkills: "Основний стек",
     selectedWork: "Обрані проєкти", projectHeading: "Від інтерфейсу", projectAccent: "до робочого продукту.",
     projectIntro: "Інтернет-магазин та інструменти для Telegram: проєкти, у яких інтерфейс поєднаний із логікою застосунку й інтеграціями.",
@@ -163,14 +162,16 @@ function ProjectCard(project: ProjectProps) {
 }
 
 export default function Home() {
-  const [languagePreference, setLanguagePreference] = useState<LanguagePreference>("browser");
+  const [languagePreference, setLanguagePreference] = useState<Language | null>(null);
   const [browserLanguage, setBrowserLanguage] = useState<Language>("en");
-  const [theme, setTheme] = useState<Theme>("system");
+  const [theme, setTheme] = useState<Theme | null>(null);
+  const [systemDark, setSystemDark] = useState(false);
   const [isLanguageTransitioning, setIsLanguageTransitioning] = useState(false);
   const [navMode, setNavMode] = useState<NavMode>("hero");
   const languageFinishTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scrollAnchor = useRef<{ element: Element; top: number } | null>(null);
-  const language = languagePreference === "browser" ? browserLanguage : languagePreference;
+  const language = languagePreference ?? browserLanguage;
+  const isDark = theme === "dark" || (theme === null && systemDark);
   const t = copy[language];
   const traflume = traflumeCopy[language];
 
@@ -184,8 +185,11 @@ export default function Home() {
   }, [language]);
 
   useEffect(() => {
+    const colorScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateColorScheme = () => setSystemDark(colorScheme.matches);
     const frame = window.requestAnimationFrame(() => {
       setBrowserLanguage(getBrowserLanguage());
+      updateColorScheme();
       const savedTheme = document.documentElement.dataset.theme;
       if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
       try {
@@ -195,9 +199,11 @@ export default function Home() {
     });
     const updateBrowserLanguage = () => setBrowserLanguage(getBrowserLanguage());
     window.addEventListener("languagechange", updateBrowserLanguage);
+    colorScheme.addEventListener("change", updateColorScheme);
     return () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("languagechange", updateBrowserLanguage);
+      colorScheme.removeEventListener("change", updateColorScheme);
     };
   }, []);
 
@@ -234,9 +240,8 @@ export default function Home() {
     return () => window.removeEventListener("scroll", updateNavigation);
   }, []);
 
-  function changeLanguage(next: LanguagePreference) {
-    const nextLanguage = next === "browser" ? browserLanguage : next;
-    if (nextLanguage !== language) {
+  function changeLanguage(next: Language) {
+    if (next !== language) {
       const anchor = [...document.querySelectorAll("section, footer")].find(el => el.getBoundingClientRect().bottom > 100);
       if (anchor) scrollAnchor.current = { element: anchor, top: anchor.getBoundingClientRect().top };
       if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -249,7 +254,8 @@ export default function Home() {
     try { window.localStorage.setItem("portfolio-language", next); } catch {}
   }
 
-  function changeTheme(next: Theme) {
+  function toggleTheme() {
+    const next = isDark ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     setTheme(next);
     try { window.localStorage.setItem("portfolio-theme", next); } catch {}
@@ -266,15 +272,20 @@ export default function Home() {
         <div className="navLinks"><a href="#work">{t.nav.work}</a><a href="#services">{t.nav.services}</a><a href="#about">{t.nav.about}</a></div>
         <div className="navActions">
           <div className="navPreferences">
-            <select className="preferenceSelect" aria-label={t.preferences.language} value={languagePreference} onChange={event => changeLanguage(event.target.value as LanguagePreference)}>
-              <option value="browser">{t.preferences.browser}</option>
-              {languages.map(({ code, label }) => <option key={code} value={code} lang={code}>{label}</option>)}
-            </select>
-            <select className="preferenceSelect" aria-label={t.preferences.theme} value={theme} onChange={event => changeTheme(event.target.value as Theme)}>
-              <option value="system">{t.preferences.system}</option>
-              <option value="light">{t.preferences.light}</option>
-              <option value="dark">{t.preferences.dark}</option>
-            </select>
+            <div className="languageSwitch" role="group" aria-label={t.preferences.language}>
+              {languages.map(({ code, label, title }) => (
+                <button key={code} type="button" lang={code} title={title} aria-label={title} aria-pressed={language === code} onClick={() => changeLanguage(code)}>{label}</button>
+              ))}
+            </div>
+            <button className="themeToggle" type="button" onClick={toggleTheme} aria-label={isDark ? t.preferences.light : t.preferences.dark} title={isDark ? t.preferences.light : t.preferences.dark}>
+              <svg className="themeMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20.9 13.3A9 9 0 0 1 10.7 3.1 9 9 0 1 0 20.9 13.3Z" />
+              </svg>
+              <svg className="themeSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4" />
+              </svg>
+            </button>
           </div>
           <a className="navCta" href="mailto:nikolasdusyk.99@gmail.com">{t.nav.talk} <span aria-hidden="true">↗</span></a>
         </div>
@@ -310,7 +321,7 @@ export default function Home() {
       </section>
 
       <section className="servicesSection" id="services"><div className="shell">
-        <div className="sectionHead light"><div><p className="kicker">{t.servicesKicker}</p><h2>{t.servicesHeading}<br /><span>{t.servicesAccent}</span></h2></div><p>{t.servicesIntro}</p></div>
+        <div className="sectionHead"><div><p className="kicker">{t.servicesKicker}</p><h2>{t.servicesHeading}<br /><span>{t.servicesAccent}</span></h2></div><p>{t.servicesIntro}</p></div>
         <div className="serviceGrid">{t.services.map(([title, text], index) => <article className="service" key={title}><span className="serviceNumber">{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
       </div></section>
 

@@ -10,6 +10,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const title = "Bozemen — Full-Stack Developer";
 
 // Apply a saved theme before the page paints. CSS handles the system default.
 const themeScript = `try {
@@ -20,16 +21,16 @@ const themeScript = `try {
 export const metadata: Metadata = {
   icons: { icon: `${basePath}/favicon.svg` },
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
-  title: "Bozemen — Web Developer · Full Stack",
+  title,
   description: "Personal portfolio: React and TypeScript interfaces, NovaShop and practical web development.",
   openGraph: {
-    title: "Bozemen — Web Developer · Full Stack",
+    title,
     description: "Explore NovaShop, my tools and the work behind the interface.",
-    images: [{ url: `${basePath}/og.png`, width: 1200, height: 630, alt: "Bozemen — Web Developer · Full Stack" }],
+    images: [{ url: `${basePath}/og.png`, width: 1200, height: 630, alt: title }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bozemen — Web Developer · Full Stack",
+    title,
     description: "Explore NovaShop, my tools and the work behind the interface.",
     images: [`${basePath}/og.png`],
   },
