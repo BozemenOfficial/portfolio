@@ -137,8 +137,8 @@ main[data-language="ru"] .hero h1,main[data-language="uk"] .hero h1 { font-size:
 .projectInfo h3 { margin:0; font-size:45px; letter-spacing:-.055em; }
 .projectTitleRow>span { color:#898c82; font:500 12px/1 var(--font-geist-mono); }
 .projectInfo>p { color:#62645c; line-height:1.65; margin:22px 0 28px; }
-.featureList { list-style:none; padding:0; margin:0; border-top:1px solid var(--line); }
-.featureList li { padding:11px 0; border-bottom:1px solid var(--line); font-size:13px; }
+.featureList { width:fit-content; max-width:100%; list-style:none; padding:0; margin:0; border-top:1px solid var(--line); }
+.featureList li { padding:11px 20px 11px 0; border-bottom:1px solid var(--line); font-size:13px; }
 .featureList li::before { content:"+"; color:#719800; font-weight:800; margin-right:10px; }
 .tags { display:flex; flex-wrap:wrap; gap:7px; margin:26px 0; }
 .tags span { border:1px solid #c9c5ba; border-radius:50px; padding:7px 10px; color:#62645c; font:600 10px/1 var(--font-geist-mono); }
@@ -295,8 +295,8 @@ footer { background:var(--paper); border-top:1px solid var(--line); padding-top:
 }
 
 /* Shared project layout and accessible responsive navigation. */
-.projectCard { align-items:start; gap:32px; padding-block:32px; }
-.projectCard + .projectCard { margin-top:40px; }
+.projectCard { align-items:start; gap:32px; padding-block:32px; border-bottom:0; }
+.projectCard:last-child { border-bottom:1px solid var(--line); }
 .projectCard .projectVisual { width:100%; min-height:0; aspect-ratio:auto; align-self:center; border:1px solid var(--line); border-radius:8px; background:#111; }
 .projectCard .projectVisual img { position:static; display:block; width:100%; height:auto; object-fit:contain; transform:none; }
 .projectCard:hover .projectVisual img { transform:none; }
