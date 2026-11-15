@@ -22,7 +22,7 @@ function getBrowserLanguage(): Language {
   return preferred.map(locale => locale.toLowerCase().split("-")[0]).find(isLanguage) ?? "en";
 }
 
-const skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Node.js", "GitHub", "npm", "Python", "SQLite", "VS Code", "Tailwind CSS", "Docker"];
+const skills = ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Node.js", "Git", "GitHub", "npm", "Python", "SQLite", "VS Code", "Tailwind CSS", "Docker"];
 
 const copy = {
   en: {
